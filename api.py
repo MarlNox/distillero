@@ -1,4 +1,5 @@
 from flask import Flask
+import nltkk
 from flask import Flask, request, render_template,jsonify, redirect,make_response,url_for
 import nltk
 import os
