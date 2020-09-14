@@ -14,7 +14,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 @app.route('/')
-return ('', 204)
+
 
 
 @app.route('/keyExt', methods=["GET"])
