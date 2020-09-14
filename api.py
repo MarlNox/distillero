@@ -126,17 +126,16 @@ def upload_file():
 @app.errorhandler(500)
 def internal_error(error):
     print(str(error))  # ghetto logging
-    return ('', 204)
+
 
 @app.errorhandler(404)
 def not_found_error(error):
     print(str(error))
-    return ('', 204)
+
 
 @app.errorhandler(405)
 def not_allowed_error(error):
     print(str(error))
-    return ('', 204)
 
 if not app.debug:
     file_handler = FileHandler('error.log')
