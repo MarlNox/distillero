@@ -24,10 +24,10 @@ IMAPClient==2.1.0
 itsdangerous==1.1.0
 Jinja2==2.11.2
 jmespath==0.10.0
-joblib @ file:///tmp/build/80754af9/joblib_1594236160679/work
+joblib
 lxml==4.5.2
 MarkupSafe==1.1.1
-nltk @ file:///tmp/build/80754af9/nltk_1592496090529/work
+nltk
 numpy==1.19.2
 olefile==0.46
 opencv-python==4.4.0.42
@@ -43,7 +43,7 @@ pydocker==1.0.5
 python-dateutil==2.8.1
 python-pptx==0.6.18
 pytz==2020.1
-regex @ file:///C:/ci/regex_1596811715751/work
+regex
 requests==2.24.0
 s3transfer==0.3.3
 scipy==1.5.2
@@ -53,7 +53,7 @@ sortedcontainers==2.2.2
 soupsieve==2.0.1
 SpeechRecognition==3.8.1
 textract==1.6.3
-tqdm @ file:///tmp/build/80754af9/tqdm_1596810128862/work
+tqdm
 tzlocal==1.5.1
 urllib3==1.25.10
 Werkzeug==1.0.1
