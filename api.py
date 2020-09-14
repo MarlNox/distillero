@@ -113,6 +113,8 @@ def upload_file():
             summare1 = (" ".join(summe[:2]))
             summare2 = str(summare1)
             return jsonify({"output": summare2})
+        else:
+            return ('', 204)
     elif request.method == 'GET':
         return render_template('dropimage.html')
     else:
