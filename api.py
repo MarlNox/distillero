@@ -14,6 +14,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 @app.route('/')
+return ('', 204)
 
 
 @app.route('/keyExt', methods=["GET"])
@@ -125,14 +126,17 @@ def upload_file():
 @app.errorhandler(500)
 def internal_error(error):
     print(str(error))  # ghetto logging
+    return ('', 204)
 
 @app.errorhandler(404)
 def not_found_error(error):
     print(str(error))
+    return ('', 204)
 
 @app.errorhandler(405)
 def not_allowed_error(error):
     print(str(error))
+    return ('', 204)
 
 if not app.debug:
     file_handler = FileHandler('error.log')
@@ -144,6 +148,7 @@ if not app.debug:
     file_handler.setLevel(logging.INFO)
     app.logger.addHandler(file_handler)
     app.logger.info('errors')
+    return ('', 204)
 
 
 
