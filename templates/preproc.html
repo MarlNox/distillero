@@ -12,8 +12,8 @@
 	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 	<link rel="shortcut icon" href="favicon.ico">
 
-	<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Roboto:150,200,250,200italic,300' rel='stylesheet' type='text/css'>
+
 
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="static/css/animate.css">
@@ -66,6 +66,17 @@
 				<div class="row">
 					<div data-animate-effect="fadeInLeft">
 						<h1>Upload a file to summarize:</h1>
+						<h1><small> Choose the length of the summary as a  percentage of the input text: </small></h1>
+			  <input type="range" id="lngth" min="0" max="1" step="0.01" onkeyup="generatetext_sum_text()">
+			  <h1><small> Or Alternatively choose the number of words you expect the output to be: </small></h1>
+			  <label for="quantity">Summary length in words:</label>
+			  <input type="number" id="quantity" name="quantity">
+						<script>
+						function refreshPage(){
+						window.location.reload();
+						}
+</script>
+<button type="submit"  onClick="refreshPage()">Do another summarization!</button>
 					</div>
 
 {% extends "_base.html" %}
@@ -87,6 +98,7 @@
           <div id="err_result" class="alert alert-warning" style="display:none">
             <a href="#" class="close" data-dismiss="alert">&times;</a>
             Please upload a file in .docx, .pptx, pdf or xlsx formats!
+
           </div>
          <textarea id="result_text" class="form-control" rows="8" style="display:none" ></textarea>
 

@@ -13,7 +13,6 @@
 	<link rel="shortcut icon" href="favicon.ico">
 
 	<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,600,400italic,700' rel='stylesheet' type='text/css'>
-	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="static/css/animate.css">
@@ -115,24 +114,40 @@
 							 {
 							 document.getElementById('text_sum_text').innerText =
 							 document.getElementById('text_sum_text1').value + '&tty&80*123408&&&xxcc&&vvbb&&&&324562jjkb@#_!+*&$)@NQB(' +
-							 document.getElementById('lngth').value;
+							 document.getElementById('lngth').value; + 'jcewfrnnc2@@@#328&!%#&!@*$(*)(@#^$(!&$**#^^$' +
+							 document.getElementById('quantity').value;
 							 }</script>
+<script>
+ $("#text_sum_clicked").click(function(){
+    ev.preventDefault();
+    $('#refresh').removeClass('hide');
+    $('#text_sum_clicked').addClass('hide');
+  });
+</script>
 
-
-
-
-
+<script>
+function refreshPage(){
+    window.location.reload();
+}
+</script>
 
 
 
 							<i style="font-size: small;">Enter text (more than 2 sentences)</i> <br>
 							<textarea type="text" id="text_sum_text1" style="height:200px; font-size:14pt;width: 80%;" wrap="hard" onkeyup="generatetext_sum_text()"></textarea>
                             <label>Input the number of words expected as output:</label><br>
-							<input type="range" id="lngth" min="0" max="1" step="0.01" onkeyup="generatetext_sum_text()">
+		<div>
+			  <input type="range" id="lngth" min="0" max="1" step="0.01" onkeyup="generatetext_sum_text()">
+			  <h1><small> Or Alternatively choose the number of words you expect the output to be: </small></h1>
+			  <label for="quantity">Summary length in words:</label>
+			  <input type="number" id="quantity" name="quantity" value="0">
+		</div>
+						<div>
+							<button class="btn1" id="text_sum_clicked" onclick="text_sum()" class="btn btn-primary btn-outline">Submit Text</button>
+							<button class="btn2" type="submit"  onClick="refreshPage()">Do another summarization!</button>
 
-							<button id="text_sum_clicked" onclick="text_sum()" class="btn btn-primary btn-outline">Submit Text</button>
-                            <output id="text_sum_text" class="collapse" />
-
+                            <output id="text_sum_text" class="collapse"/>
+						</div>
 
 						</p>
 						<p>

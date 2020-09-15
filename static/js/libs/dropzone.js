@@ -119,7 +119,7 @@
       withCredentials: false,
       parallelUploads: 2,
       uploadMultiple: false,
-      maxFilesize: 10,
+      maxFilesize: 30,
       paramName: "file",
       createImageThumbnails: true,
       maxThumbnailFilesize: 10,
