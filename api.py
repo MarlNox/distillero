@@ -106,7 +106,7 @@ def upload_file():
             path="./uploads/{}".format(filename)
             path1 = str(path)
             print ("file was uploaded in {} ".format(path1))
-            myfile1 = textract.process(os.path.join(path=path1)).decode('utf-8')
+            myfile1 = textract.process(os.path.join("./uploads/{}".format(filename))).decode('utf-8')
             a_list = myfile1.split()
             myfile2 = " ".join(a_list)
             print(myfile2)
