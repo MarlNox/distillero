@@ -1,6 +1,7 @@
 import nltk
 nltk.download('punkt')
-nltk.download('pickle')
+nltk.download('averaged_perceptron_tagger')
+
 
 
 
