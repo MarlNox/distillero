@@ -31,6 +31,10 @@ def pre_process():
 def summary():
     return render_template('text_Summarization.html')
 
+@app.route('/transcriber', methods=["GET"])
+def transcriber():
+    return render_template('transcriber.html')
+
 
 @app.route("/keyword", methods=["GET", "POST"])
 def keyword():
@@ -162,6 +166,57 @@ def upload_file():
         return render_template('dropimage.html')
     else:
         return jsonify({"error": "Please try a new file."})
+
+
+
+
+UPLOAD_FOLDER = './uploads'
+ALLOWED_EXTENSIONS1 = set(['mp3'])
+
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+DROPZONE_MAX_FILE_SIZE=30,
+
+_VERSION = 1  # API version
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS1
+
+@app.route('/',methods=['GET','POST'])
+def index1():
+    return render_template('transcriber.html')
+
+@app.route('/transcriber',methods=['GET','POST'])
+def upload_file1():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            path="./uploads/{}".format(filename)
+            print ("file was uploaded in {} ".format(path))
+            myfile1 = textract.process("./uploads/{}".format(filename)).decode('utf-8')
+            a_list = myfile1.split()
+            myfile2 = " ".join(a_list)
+            print(myfile2)
+            summare2 = str(myfile2)
+            return jsonify({"output": summare2})
+        else:
+            return ('', 204)
+    elif request.method == 'GET':
+        return render_template('dropimage.html')
+    else:
+        return jsonify({"error": "Please try a new file."})
+
+
+
+
+
+
+
+
+
+
 
 
 @app.route('/form', methods=['POST'])

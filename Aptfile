@@ -1,2 +1,5 @@
 build-essential libpoppler-cpp-dev pkg-config python3-dev
+-qq python python-dev python-pip build-essential swig git libpulse-dev libasound2-dev
 poppler-utils
+python-pocketsphinx
+sox
