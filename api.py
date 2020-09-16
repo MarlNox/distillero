@@ -121,22 +121,42 @@ def index():
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            path = "./uploads/{}".format(filename)
-            print("file was uploaded in {} ".format(path))
-            myfile1 = textract.process("./uploads/{}".format(filename)).decode('utf-8')
-            a_list = myfile1.split()
-            myfile2 = " ".join(a_list)
-            print(myfile2)
-            summare = summy(myfile2)
-            summe = nltk.sent_tokenize(summare)
-            summare1 = (" ".join(summe[:2]))
-            summare2 = str(summare1)
-            return jsonify({"output": summare2})
+        filename, file_extension = os.path.splitext('/path/to/somefile.ext')
+
+        if file_extension == "pdf":
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                path = "./uploads/{}".format(filename)
+                print("file was uploaded in {} ".format(path))
+                myfile1 = textract.process("./uploads/{}".format(filename), method='pdfminer').decode('utf-8')
+                a_list = myfile1.split()
+                myfile2 = " ".join(a_list)
+                print(myfile2)
+                summare = summy(myfile2)
+                summe = nltk.sent_tokenize(summare)
+                summare1 = (" ".join(summe[:2]))
+                summare2 = str(summare1)
+                return jsonify({"output": summare2})
+            else:
+                return ('', 204)
         else:
-            return ('', 204)
+            if file and allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                path = "./uploads/{}".format(filename)
+                print("file was uploaded in {} ".format(path))
+                myfile1 = textract.process("./uploads/{}".format(filename)).decode('utf-8')
+                a_list = myfile1.split()
+                myfile2 = " ".join(a_list)
+                print(myfile2)
+                summare = summy(myfile2)
+                summe = nltk.sent_tokenize(summare)
+                summare1 = (" ".join(summe[:2]))
+                summare2 = str(summare1)
+                return jsonify({"output": summare2})
+            else:
+                return ('', 204)
     elif request.method == 'GET':
         return render_template('dropimage.html')
     else:
