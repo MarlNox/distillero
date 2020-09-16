@@ -126,7 +126,7 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             path = "./uploads/{}".format(filename)
             print("file was uploaded in {} ".format(path))
-            myfile1 = textract.process(os.path.join(path=path)).decode('utf-8')
+            myfile1 = textract.process(os.path.join("./uploads/{}".format(filename))).decode('utf-8')
             a_list = myfile1.split()
             myfile2 = " ".join(a_list)
             print(myfile2)
