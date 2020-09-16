@@ -128,8 +128,7 @@ def upload_file():
             print("file was uploaded in {} ".format(path))
             file_extension = os.path.splitext(path)
             if file_extension is pdf:
-                myfile1 = textract.process(os.path.join(path=path),  method='pdfminer').decode('utf-8')
-                myfilew = str(myfile1)
+                myfile1 = textract.process(os.path.join(path=path)).decode('utf-8')
                 a_list = myfile1.split()
                 myfile2 = " ".join(a_list)
                 print(myfile2)
