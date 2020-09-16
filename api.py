@@ -66,7 +66,7 @@ def summarize():
             summary1 = "please pass more than 3 sentences to summarize the text"
         else:
             r = lngth
-            summary = summy(text, ratio=r)
+            summary = summy(text, ratio=lngth)
 
             summ = nltk.sent_tokenize(summary)
             summary1 = (" ".join(summ[:2]))
