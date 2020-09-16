@@ -7,11 +7,12 @@ from autocorrect import spell
 from summa.summarizer import summarize as summy
 from gensim.summarization import summarize as g_sumn
 import textract
+import nltkk
+import pdf2txt
 import logging
 from logging import Formatter, FileHandler
 from werkzeug.utils import secure_filename
-import nltkk
-import pdf2txt
+
 
 app = Flask(__name__)
 
