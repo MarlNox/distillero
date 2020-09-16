@@ -11,6 +11,7 @@ import logging
 from logging import Formatter, FileHandler
 from werkzeug.utils import secure_filename
 import nltkk
+import pdf2txt
 
 app = Flask(__name__)
 
