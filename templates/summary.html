@@ -34,8 +34,8 @@
                     <span class="divider a-mx-20"></span>
                     <ul class="d-none d-md-flex menu">
                         <li class="font-weight-medium a-nowrap item"><a href="preproc">File Summarization</a></li>
-                        <li class="font-weight-medium a-nowrap item"><a href="summary">Text Summarization</a></li>
-                        <li class="font-weight-medium a-nowrap item active-link"><a href="keyExt">Keyword Extraction</a></li>
+                        <li class="font-weight-medium a-nowrap item active-link"><a href="summary">Text Summarization</a></li>
+                        <li class="font-weight-medium a-nowrap item"><a href="keyExt">Keyword Extraction</a></li>
                     </ul>
                 </div>
                 <div class="d-flex align-items-center a-pl-10">
@@ -56,8 +56,8 @@
                             <div class="dropdown-title">WELCOME FIRST LASTNAME</div>
                             <ul class="user-infor-list">
                                 <li class="user-infor-list-item"><a href="preproc">File Summarization</a></li>
-                                <li class="user-infor-list-item"><a href="summary">Text Summarization</a></li>
-                                <li class="user-infor-list-item active-link"><a href="keyExt">Keyword Extraction</a></li>
+                                <li class="user-infor-list-item active-link"><a href="summary">Text Summarization</a></li>
+                                <li class="user-infor-list-item"><a href="keyExt">Keyword Extraction</a></li>
                                 <li class="user-infor-list-item"><a href="transcriber">Voice Transcriber</a></li>
                             </ul>
                             <div class="user-logout border-top">
@@ -71,20 +71,20 @@
             <!-- Main content -->
             <div class="a-template-content a-bg-f5f" id="hfn-content-container">
                 <div class="container" style="max-width: 1200px!important;">
-
+                
                     <div class="row d-flex">
                         <div class="col-12 d-table">
                             <div class="a-panel a-m-20">
                                 <div class="a-panel-header"><span>PwC Summarizer</span></div>
                                 <div class="a-pb-20 a-pt-10 mw-100-percent overflow-hidden">
                                     <div class="a-font-16">
-                                        The Keyword Extraction feature allows users to input a given text and be provided with the most frequent, and most
-                                        important words and word-clusters within the input text that define the meaning of the input.
-                                        Follow the below steps to have keywords extracted from your input text:
+                                        PwC Summarizer is a tool that can be used to condense text in all European languages, based on conditions set by the user.
+                                        Follow the below steps to get your summarized text:
                                         <ul class="a-px-20">
-                                            <li>1. Type/Paste the text you would like to use to run the process of keyword extraction.</li>
-                                            <li>2. Click the Submit Button to receive the extracted keywords.</li>
-                                            <li>3. Use the Clipboard button to copy the identified keywords or the Reset button to add another input text.</li>
+                                            <li>1. Type/Paste the text you would like to summarize.</li>
+                                            <li>2. Choose the length of the summary as a percentage of the input text and click Submit.</li>
+                                            <li>3. Scroll down to view your results in the Summarized text box at the bottom of your screen.</li>
+                                            <li>4. Use the Clipboard button to copy the resulting summarized text or the Reset button to summarize another text.</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -95,24 +95,40 @@
                     <div class="row d-flex">
                         <div class="col-12 d-table">
                             <div class="a-panel a-m-20">
-                                <div class="a-panel-header justify-content-between align-items-center">
-                                    <span>KeyWord Extractor</span>
+                                <div class="a-panel-header justify-content-between">
+                                    <span>Text summarization</span>
                                     <div class="d-flex justify-content-between">
                                         <button onclick="resetSummarizer()" class="a-btn a-btn-primary a-btn-md a-mx-10 w-8" title="Do another summarization">
                                             <span class="appkiticon a-btn-icon icon-refresh-outline"></span>Reset
                                         </button>
-                                        <button onclick="submitKeywords()" class="a-btn a-btn-primary a-btn-md w-8" title="Copy text to clipboard">
+                                        <button onclick="submitText()" class="a-btn a-btn-primary a-btn-md w-8" title="Copy text to clipboard">
                                             <span class="appkiticon a-btn-icon icon-circle-checkmark-outline"></span>Submit
                                         </button>
                                     </div>
                                 </div>
-                                <div class="a-pb-20 a-pt-10">
+                                <div class="a-py-20 mw-100-percent overflow-hidden">
+
+                                    <div class="a-slider-wrapper mw-420 a-p-10 m-auto">
+                                        <div class="a-slider-header">
+                                            <div class="mr-auto a-label-wrapper">
+                                                <label class="a-slider-label">Choose the length of the summary as a percentage of the input text</label>
+                                            </div>
+                                            <div class="a-label-wrapper">
+                                                <input aria-label="slider value" class="a-text-input a-slider-input slider-input-focus" id="slider-val" name="slider-val" size="20" type="text" value="0.5">
+                                            </div>
+                                        </div>
+                                        <div class="a-slider" id="slider"></div>
+                                    </div>
+
+
+
                                     <div class="a-m-10 add-comments bt-active-wrapper">
                                         <div class="d-flex flex-column a-textarea-box">
-                                            <textarea id="textKeywords" rows="10" class="a-text-field txt-input txt-input-l4 custom-scrollbar"></textarea>
+                                            <textarea id="textToSummarize" rows="10" class="a-text-field txt-input txt-input-l4 custom-scrollbar"></textarea>
                                         </div>
                                     </div>
                                 </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -121,7 +137,7 @@
                         <div class="col-12 d-table">
                             <div class="a-panel a-m-20">
                                 <div class="a-panel-header justify-content-between align-items-center">
-                                    <span>Extracted Keywords</span>
+                                    <span>Summarized text</span>
                                     <button onclick="copyToClipBoard()" class="a-btn a-btn-primary a-btn-md w-8" title="Copy text to clipboard">
                                         <span class="appkiticon a-btn-icon icon-duplicate-outline"></span>Clipboard
                                     </button>
@@ -129,17 +145,16 @@
                                 <div class="a-pb-20 a-pt-10">
                                     <div class="a-m-10 add-comments bt-active-wrapper">
                                         <div class="d-flex flex-column a-textarea-box">
-                                            <textarea id="extractedKeywords" rows="10" class="a-text-field txt-input txt-input-l4 custom-scrollbar"></textarea>
+                                            <textarea id="summarizedText" rows="10" class="a-text-field txt-input txt-input-l4 custom-scrollbar"></textarea>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
+            
             <!-- Footer -->
             <div class="footer-wrapper flex-shrink-0 a-p-10 text-center">
                 <div class="a-footer a-text-grey">© 2020 PwC. PwC refers to the PwC network and/or one or more of its member firms, each of which is a separate legal entity. Please see www.pwc.com/structure for further details.</div>
@@ -150,32 +165,55 @@
 
     <script src="https://pwcappkit-static.azureedge.net/cdn/release/3.6.0/vendor.min.js"></script>
     <script src="https://pwcappkit-static.azureedge.net/cdn/release/3.0.0/appkit.min.js"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".a-stepper-fun").stepper();
 
-    <script>
-        function submitKeywords() {
-            var text = $('#textKeywords').val();
+            $('#slider').slider({range: "min", min: 0, max: 1, value: 0.50, step: 0.01,
+                slide(event, ui) {
+                    $('#slider-val').val(formatNumber(ui.value));
+                },
+                change(event, ui) {
+                    $('#slider-val').val(formatNumber(ui.value));
+                }
+            });
+ 
+            $('.a-slider-input').not('.range').on('change', e => {
+                const target = $(e.target),
+                    num = target.val().replace(/,/g, ''),
+                    value = isNaN(num) ? 0 : num,
+                    slider = target.closest('.a-slider-header').siblings('.a-slider');
+                    slider.slider('value', value);
+            });
+ 
+            function formatNumber(num) {
+                while (/(\d+)(\d{3})/.test(num.toString())) {
+                    num = num.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+                }
+                return num;
+            }
+        });
+
+        function submitText() {
+            var text = $('#textToSummarize').val();
+
+            var numberOfWords = $('#number-words').val();
+            var percentage = $('#slider-val').val();
+
+            var data = { text: text, percentage: percentage, numberOfWords: numberOfWords }
 
             if (text != undefined && text != '') {
                 $.ajax({
-                    url: "/keyword",
+                    url: "/summarize",
                     type: "POST",
-                    data: { text: text },
+                    data: { text: text, percentage: percentage, numberOfWords: numberOfWords },
                     success: function (response) {
-                        var text = "";
-                        var arrayOfKeyWords = response.result.result;
-                        $.each(arrayOfKeyWords, function (index, val) {
-                            if (index == 0) {
-                                text = text + val;
-                            }
-                            else {
-                                text = text + ', ' + val;
-                            }
-                        });
-                        $("#extractedKeywords").val(text);
-                        showNotification("success", "The key words were successfully extracted.");
+                        var text = response.result.result;
+                        $("#summarizedText").val(text);
+                        showNotification("success", "The text was successfully summarized.");
                     },
-                    error: function (error) {
-                        console.log(error)
+                    error: function () {
                         showNotification("error", "An error occurred, your request could not be processed.");
                     }
                 });
@@ -183,12 +221,14 @@
         };
 
         function resetSummarizer() {
-            $('#textKeywords').val('');
-            $('#extractedKeywords').val('');
+            $('#slider-val').slider({range: "min", min: 0, max: 1, value: 0.50, step: 0.01});
+            $('#number-words').val(0);
+            $('#textToSummarize').val('');
+            $('#summarizedText').val('');
         };
 
         function copyToClipBoard() {
-            var copyText = document.getElementById("extractedKeywords");
+            var copyText = document.getElementById("summarizedText");
             copyText.select();
             copyText.setSelectionRange(0, 99999);
             document.execCommand("copy");
@@ -211,5 +251,4 @@
             $('.a-notification').notification('show');
         }
     </script>
-
 </html>

@@ -1,114 +1,55 @@
 from flask import Flask
 from flask import Flask, request, render_template, jsonify, redirect, make_response, url_for
-import nltk
 import os
+import logging
+from logging import Formatter, FileHandler
+from werkzeug.utils import secure_filename
+import re
+from summarizer import Summarizer
+import textract
+import nltk
 from flask_dropzone import Dropzone
+import os
 from autocorrect import spell
 from summa.summarizer import summarize as summy
 from gensim.summarization import summarize as g_sumn
 import textract
-import nltkk
-import logging
-from logging import Formatter, FileHandler
-from werkzeug.utils import secure_filename
+from transformers import *
+
 
 
 app = Flask(__name__)
 
 
 @app.route('/')
+
+
+
 @app.route('/keyExt', methods=["GET"])
 def keyword_extraction():
-    return render_template('keyExt.html')
+   return render_template('keyExt.html')
 
 
 @app.route('/preproc', methods=["GET"])
 def pre_process():
-    return render_template('preproc.html')
+   return render_template('preproc.html')
 
 
 @app.route('/summary', methods=["GET"])
-def summary():
-    return render_template('text_Summarization.html')
-
-@app.route('/transcriber', methods=["GET"])
-def transcriber():
-    return render_template('transcriber.html')
-
-
-@app.route("/keyword", methods=["GET", "POST"])
-def keyword():
-    text = request.form['text']
-    word = nltk.word_tokenize(text)
-    pos_tag = nltk.pos_tag(word)
-    chunk = nltk.ne_chunk(pos_tag)
-    NE = [" ".join(w for w, t in ele) for ele in chunk if isinstance(ele, nltk.Tree)]
-    result = {
-        "result": NE
-    }
-    result = {str(key): value for key, value in result.items()}
-    return jsonify(result=result)
-
-
-@app.route("/summarize", methods=["GET", "POST"])
-def summarize():
-    text1 = request.form['text']
-    s2 = "&tty&80*123408&&&xxcc&&vvbb&&&&324562jjkb@#_!+*&$)@NQB("
-    s3 = "jcewfrnnc2@@@#328&!%#&!@*$(*)(@#^$(!&$**#^^$"
-
-    numri1 = text1.partition(s3)[2]
-    numri = int(numri1 or 0)
-    if numri == 0:
-        lngth1 = text1.partition(s2)[2]
-        lngth = float(lngth1)
-        textx = text1.partition(s2)[0]
-        textu = str(textx)
-        b_list = textu.split()
-        text = " ".join(b_list)
-        sent = nltk.sent_tokenize(text)
-        if len(sent) < 2:
-            summary1 = "please pass more than 3 sentences to summarize the text"
-        else:
-            r = lngth
-            summary = summy(text, ratio=lngth)
-
-            summ = nltk.sent_tokenize(summary)
-            summary1 = (" ".join(summ[:2]))
-            result = {
-                "result": summary1
-            }
-            result = {str(key): value for key, value in result.items()}
-            return jsonify(result=result)
-    else:
-        numri1 = text1.partition(s3)[2]
-
-        numri = int(numri1 or 0)
-
-        textx = text1.partition(s2)[0]
-        textu = str(textx)
-        b_list = textu.split()
-        text = " ".join(b_list)
-        sent = nltk.sent_tokenize(text)
-        if len(sent) < 2:
-            summary1 = "please pass more than 3 sentences to summarize the text"
-        else:
-            print(numri)
-            t = numri
-            summary = summy(text, words=numri)
-            summ = nltk.sent_tokenize(summary)
-            summary1 = (" ".join(summ[:2]))
-            result = {
-                "result": summary1
-            }
-            result = {str(key): value for key, value in result.items()}
-            return jsonify(result=result)
+def summar():
+   return render_template('summary.html')
 
 
 UPLOAD_FOLDER = './uploads'
-ALLOWED_EXTENSIONS = set(['pdf', 'pptx', 'xlsx', 'docx', 'txt'])
-
+ALLOWED_EXTENSIONS = set(['pdf', 'docx', 'docx', 'pptx', 'xls', 'xlsx', 'csv'])
+dropzone = Dropzone(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 DROPZONE_MAX_FILE_SIZE = 30,
+#model = Summarizer()
+d_tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-multilingual-cased')
+d_model = DistilBertModel.from_pretrained('distilbert-base-multilingual-cased',output_hidden_states=True)
+
+model = Summarizer(custom_model=d_model, custom_tokenizer=d_tokenizer)
 
 _VERSION = 1  # API version
 
@@ -117,115 +58,81 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/', methods=['GET', 'POST'])
-def index():
-    return render_template('preproc.html')
+
+
+
+
+
+@app.route("/keyword", methods=["GET", "POST"])
+def keyword():
+   text = request.form['text']
+   word = nltk.word_tokenize(text)
+   pos_tag = nltk.pos_tag(word)
+   chunk = nltk.ne_chunk(pos_tag)
+   NE = [" ".join(w for w, t in ele) for ele in chunk if isinstance(ele, nltk.Tree)]
+   result = {
+       "result": NE
+   }
+   result = {str(key): value for key, value in result.items()}
+   return jsonify(result=result)
+
+
+@app.route("/summarize", methods=["GET", "POST"])
+def summarize():
+   text = request.form['text'] 
+   percent = request.form['percentage']
+   #numri = request.form['numberOfWords']
+   summare = text
+   summare2 = str("'''" + summare + "'''")
+   nr1 = float(percent)
+   print(nr1)
+   result1 = model(summare2, ratio=nr1)
+   full = ''.join(result1)
+   result = {"result": full}
+   result = {str(key): value for key, value in result.items()}
+   return jsonify(result=result)
+
+
+
+
+
+
+
 
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         file = request.files['file']
-        filename, file_extension = os.path.splitext('/path/to/somefile.ext')
-
-        if file_extension == "pdf":
+        percent1 = request.form['percentage']
+        percent = float(percent1)
+        print(percent)
+        file.save(os.path.join('./upload', file.filename))
+        fls = file.filename
+        filename, file_extension = os.path.splitext(fls)
+        if file_extension == 'pdf':
             if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                path = "./uploads/{}".format(filename)
-                print("file was uploaded in {} ".format(path))
-                myfile1 = textract.process("./uploads/{}".format(filename), method='pdfminer').decode('utf-8')
-                a_list = myfile1.split()
-                myfile2 = " ".join(a_list)
-                print(myfile2)
-                summare = summy(myfile2)
-                summe = nltk.sent_tokenize(summare)
-                summare1 = (" ".join(summe[:2]))
-                summare2 = str(summare1)
-                return jsonify({"output": summare2})
-            else:
-                return ('', 204)
+                summare = textract.process('./upload/'+fls, method='pdftotext').decode('utf-8')
+                summare2 = str("'''" + summare + "'''")
+                print(percent)
+                print(summare2)
+                result = model(summare2, ratio=percent)
+                full = ''.join(result)
+                return jsonify({"output": full})
         else:
             if file and allowed_file(file.filename):
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                path = "./uploads/{}".format(filename)
-                print("file was uploaded in {} ".format(path))
-                myfile1 = textract.process("./uploads/{}".format(filename)).decode('utf-8')
-                a_list = myfile1.split()
-                myfile2 = " ".join(a_list)
-                print(myfile2)
-                summare = summy(myfile2)
-                summe = nltk.sent_tokenize(summare)
-                summare1 = (" ".join(summe[:2]))
-                summare2 = str(summare1)
-                return jsonify({"output": summare2})
-            else:
-                return ('', 204)
+                summare = textract.process('./upload/' + fls).decode('utf-8')
+                summare2 = str(" ''' " + summare + "'''")
+                result = model(summare2, ratio=percent)
+                full = ''.join(result)
+                return jsonify({"output": full})
+
     elif request.method == 'GET':
-        return render_template('dropimage.html')
+            return render_template('upload.html')
     else:
-        return jsonify({"error": "Please try a new file."})
+            return jsonify({"error": "Please try a new file."})
 
 
-
-
-UPLOAD_FOLDER = './uploads'
-ALLOWED_EXTENSIONS1 = set(['mp3'])
-
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-DROPZONE_MAX_FILE_SIZE=30,
-
-_VERSION = 1  # API version
-
-def allowed_file(filename):
-    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS1
-
-@app.route('/',methods=['GET','POST'])
-def index1():
-    return render_template('transcriber.html')
-
-@app.route('/transcriber',methods=['GET','POST'])
-def upload_file1():
-    if request.method == 'POST':
-        file = request.files['file']
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            path="./uploads/{}".format(filename)
-            print ("file was uploaded in {} ".format(path))
-            myfile1 = textract.process("./uploads/{}".format(filename)).decode('utf-8')
-            a_list = myfile1.split()
-            myfile2 = " ".join(a_list)
-            print(myfile2)
-            summare2 = str(myfile2)
-            return jsonify({"output": summare2})
-        else:
-            return ('', 204)
-    elif request.method == 'GET':
-        return render_template('dropimage.html')
-    else:
-        return jsonify({"error": "Please try a new file."})
-
-
-
-
-
-
-
-
-
-
-
-
-@app.route('/form', methods=['POST'])
-def handle_form():
-    title = request.form.get('title')
-    return 'file uploaded and form submit<br>title: %s<br> description: %s' % (title, description)
-
-
-#
 #
 # @app.errorhandler(500)
 # def internal_error(error):

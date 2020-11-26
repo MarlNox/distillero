@@ -1,23 +1,22 @@
-
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Simple OCR Server</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-      <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet" media="screen">
-      <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" media="screen">
-      <link href="{{ url_for('static', filename='css/dropzone.css') }}" rel="stylesheet" media="screen">
-  </head>
+<html lang="en">
+    <head>
+        <title>PwC Summarizer</title>
 
-   <body>
-    <div class="container">
-      {% block content %}{% endblock %}
-    </div>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/libs/jquery-3.2.1.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/libs/dropzone.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/libs/bootstrap.js') }}"></script>
+        <meta charset="utf-8" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  </body>
+        <link rel="icon" type="image/x-icon" href="{{url_for('static', filename='images/pwc-favicon.ico')}}" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/summarizer.css')}}">
+        <link rel="stylesheet" href="https://pwcappkit-static.azureedge.net/cdn/release/3.0.0/vendor.min.css"> 
+        <link rel="stylesheet" href="https://pwcappkit-static.azureedge.net/cdn/release/3.0.0/appkit.min.css">
+    </head>
 
+    <body class="no-outline">
+        {% block content %}{% endblock %}
+    </body>
+
+    <script src="https://pwcappkit-static.azureedge.net/cdn/release/3.6.0/vendor.min.js"></script>
+    <script src="https://pwcappkit-static.azureedge.net/cdn/release/3.0.0/appkit.min.js"></script>
 </html>

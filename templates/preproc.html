@@ -1,139 +1,375 @@
-
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-	<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Natural Language Processing</title>
+<html lang="en">
+    <head>
+        <title>PwC Summarizer</title>
 
-	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-	<link rel="shortcut icon" href="favicon.ico">
+        <meta charset="utf-8" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-	<link href='https://fonts.googleapis.com/css?family=Roboto:150,200,250,200italic,300' rel='stylesheet' type='text/css'>
+        <link rel="icon" type="image/x-icon" href="static/images/pwc-favicon.ico" />
+        <link rel="stylesheet" href="static/css/summarizer.css">
+        <link rel="stylesheet" href="https://pwcappkit-static.azureedge.net/cdn/release/3.0.0/vendor.min.css"> 
+        <link rel="stylesheet" href="https://pwcappkit-static.azureedge.net/cdn/release/3.0.0/appkit.min.css">
+    </head>
+
+    <body class="no-outline">
+        <div class="d-flex flex-column a-bg-f5f a-template-container">
+
+            <!-- Notifications sticky bar -->
+            <div class="bar a-notification a-notification-hide a-transition-500ms" data-hide="3">
+                <span class="notification-content">
+                    <span id="notification-text" class="text-left"></span>
+                </span>
+                <div class="a-countdown-wrapper">
+                </div>
+            </div>
+
+            <!-- Header -->
+            <div class="a-header a-hfn-header-container d-flex align-items-center justify-content-between a-px-20">
+                <div class="d-flex align-items-center">
+                    <div class="a-pwc-logo a-md"></div>
+                    <span class="divider a-mx-20"></span>
+                    <div class="font-weight-medium a-nowrap">PwC Summarizer</div>
+                    <span class="divider a-mx-20"></span>
+                    <ul class="d-none d-md-flex menu">
+                        <li class="font-weight-medium a-nowrap item active-link"><a href="preproc">File Summarization</a></li>
+                        <li class="font-weight-medium a-nowrap item"><a href="summary">Text Summarization</a></li>
+                        <li class="font-weight-medium a-nowrap item"><a href="keyExt">Keyword Extraction</a></li>
+                    </ul>
+                </div>
+                <div class="d-flex align-items-center a-pl-10">
+                    <div class="a-logout d-none d-md-flex">
+                        <button aria-expanded="false" aria-haspopup="true" class="user-name a-bg-primary a-text-white size-24" data-toggle="dropdown">FL</button>
+                        <div class="dropdown-menu dropdown-menu-right a-shadow-sm border-0 a-user-setting-panel-one w-15">
+                            <div class="dropdown-title">WELCOME FIRST LASTNAME</div>
+                            <div class="user-logout">
+                                <button class="sign-out-btn a-btn a-btn-primary a-btn-lg">Log Out</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-sm-flex d-md-none a-logout align-items-center">
+                        <button class="user-name a-bg-primary a-text-white size-24" aria-expanded="false" aria-haspopup="true"data-toggle="dropdown">
+                            <span class="appkiticon icon-menu-outline"></span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right a-shadow-sm border-0 a-user-setting-panel-one w-15">
+                            <div class="dropdown-title">WELCOME FIRST LASTNAME</div>
+                            <ul class="user-infor-list">
+                                <li class="user-infor-list-item active-link"><a href="preproc">File Summarization</a></li>
+                                <li class="user-infor-list-item"><a href="summary">Text Summarization</a></li>
+                                <li class="user-infor-list-item"><a href="keyExt">Keyword Extraction</a></li>
+                                <li class="user-infor-list-item"><a href="transcriber">Voice Transcriber</a></li>
+                            </ul>
+                            <div class="user-logout border-top">
+                                <button class="sign-out-btn a-btn a-btn-primary a-btn-lg">Log Out</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main content -->
+            <div class="a-template-content a-bg-f5f" id="hfn-content-container">
+                <div class="container" style="max-width: 1200px!important;">
+                
+                    <div class="row d-flex">
+                        <div class="col-12 d-table">
+                            <div class="a-panel a-m-20">
+                                <div class="a-panel-header"><span>PwC Summarizer</span></div>
+                                <div class="a-pb-20 a-pt-10 mw-100-percent overflow-hidden">
+                                    <div class="a-font-16">
+                                        PwC Summarizer is a tool that can be used to condense text in all European languages, based on conditions set by the user.
+                                        Follow the below steps to get your summarized text:
+                                        <ul class="a-px-20">
+                                            <li>1. Choose the length of the summary as a percentage of the input document length.</li>
+                                            <li>2. Drag and drop or upload the document you would like to summarize. Choose between 'pdf', 'doc', 'docx', 'pptx', 'xls', 'xlsx' and 'csv' files.</li>
+                                            <li>3. Scroll down to view your results in the Summarized text box at the bottom of your screen.</li>
+                                            <li>4. Use the Clipboard button to copy the resulting summarized text or the Reset button to summarize another document.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex">
+                        <div class="col-12 d-table">
+                            <div class="a-panel a-m-20">
+                                <div class="a-panel-header justify-content-between">
+                                    <span>Upload a File</span>
+                                    <button onclick="resetSummarizer()" class="a-btn a-btn-primary a-btn-md a-mx-10 w-8" title="Do another summarization">
+                                        <span class="appkiticon a-btn-icon icon-refresh-outline"></span>Reset
+                                    </button>
+                                </div>
+                                <div class="a-py-20 mw-100-percent overflow-hidden">
+
+                                    <div class="a-slider-wrapper mw-420 a-p-10 m-auto">
+                                        <div class="a-slider-header">
+                                            <div class="mr-auto a-label-wrapper">
+                                                <label class="a-slider-label">Choose the length of the summary as a percentage of the input text</label>
+                                            </div>
+                                            <div class="a-label-wrapper">
+                                                <input aria-label="slider value" class="a-text-input a-slider-input slider-input-focus" id="slider-val" name="slider-val" size="20" type="text" value="0.5">
+                                            </div>
+                                        </div>
+                                        <div class="a-slider" id="slider"></div>
+                                    </div>
 
 
-	<!-- Animate.css -->
-	<link rel="stylesheet" href="static/css/animate.css">
-	<!-- Icomoon Icon Fonts-->
-	<link rel="stylesheet" href="static/css/icomoon.css">
-	<!-- Bootstrap  -->
-	<link rel="stylesheet" href="static/css/bootstrap.css">
-	<!-- Owl Carousel -->
-	<link rel="stylesheet" href="static/css/owl.carousel.min.css">
-	<link rel="stylesheet" href="static/css/owl.theme.default.min.css">
-	<!-- Theme style  -->
-	<link rel="stylesheet" href="static/css/style.css">
+                                    <div class="comments-wrapper a-py-10 mw-100-percent">
+                                        <div class="a-p-20 d-table w-100 text-center">
+                                            <div class="a-single-upload-file" id="file-upload">
+                                                <div class="upload-title">File uploader</div>
+                                                <button aria-label="Press to select file" class="upload-drop" id="upload-file-target" tabindex="0">
+                                                    <span class="drop-span">Drag and drop or</span>
+                                                    <span class="browse-span">&nbsp;choose your file <input aria-label="Hidden file upload input" type="file"></span>
+                                                    <input aria-label="Hidden file upload input" multiple="multiple" style="visibility: hidden; position: absolute; width: 1px; height: 1px;" type="file">
+                                                </button>
+                                                <div class="upload-success hidden"></div>
+                                                <div class="upload-error hidden"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
 
-	<!-- Modernizr JS -->
-	<script src="static/js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+                    <div class="row d-flex">
+                        <div class="col-12 d-table">
+                            <div class="a-panel a-m-20">
+                                <div class="a-panel-header justify-content-between align-items-center">
+                                    <span>Summarized text</span>
+                                    <button onclick="copyToClipBoard()" class="a-btn a-btn-primary a-btn-md w-8" title="Copy text to clipboard">
+                                        <span class="appkiticon a-btn-icon icon-duplicate-outline"></span>Clipboard
+                                    </button>
+                                </div>
+                                <div class="a-pb-20 a-pt-10">
+                                    <div class="a-m-10 add-comments bt-active-wrapper">
+                                        <div class="d-flex flex-column a-textarea-box">
+                                            <textarea id="summarizedText" rows="10" class="a-text-field txt-input txt-input-l4 custom-scrollbar"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <form id="upload_image" action="/upload" class="dropzone" enctype="multipart/form-data" method="post"></form>
+                        </div>
+                    </div>
 
+                </div>
+            </div>
 
-</head>
-	<body>
+            <!-- Footer -->
+            <div class="footer-wrapper flex-shrink-0 a-p-10 text-center">
+                <div class="a-footer a-text-grey">© 2020 PwC. PwC refers to the PwC network and/or one or more of its member firms, each of which is a separate legal entity. Please see www.pwc.com/structure for further details.</div>
+            </div>
 
-	<div id="fh5co-page">
-
-		<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
-		<aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-
-			<h1 id="fh5co-logo"><a href="home"><img src="static/images/pemalogo.png" alt="Free HTML5 Bootstrap Website Template" width="65%" ></a></h1>
-			<nav id="fh5co-main-menu" role="navigation">
-				<ul>
-					<li><a href="summary">Text Summarization</a></li>
-					<li><a href="preproc">File Summarization</a></li>
-					<li><a href="keyExt">Keyword Extraction</a></li>
-					<li><a href="transcriber">Voice to Text Transcriber</a></li>
-				</ul>
-			</nav>
-
-			<div class="fh5co-footer">
-				<p><small>&copy; 2020 PwC Albania</small></p>
-
-			</div>
-
-		</aside>
-
-<div id="fh5co-main">
-
-			<div class="fh5co-narrow-content">
-				<div class="row">
-					<div data-animate-effect="fadeInLeft">
-						<h1>Upload a file to summarize:</h1>
-						<h1><small> Choose the length of the summary as a  percentage of the input text: </small></h1>
-			  <input type="range" id="lngth" min="0" max="1" step="0.01" onkeyup="generatetext_sum_text()">
-			  <h1><small> Or Alternatively choose the number of words you expect the output to be: </small></h1>
-			  <label for="quantity">Summary length in words:</label>
-			  <input type="number" id="quantity" name="quantity">
-						<script>
-						function refreshPage(){
-						window.location.reload();
-						}
-</script>
-<button type="submit"  onClick="refreshPage()">Do another summarization!</button>
-					</div>
-
-{% extends "_base.html" %}
-
-{% block content %}
-
-<form  id="url_form" class="box">
-
-      <div class="form-group">
-{#          <canvas id="m_canvas" style=" width: 200px; height: 100px; position: absolute;" ></canvas>#}
-
-{#style="display: none "#}
-        <div id="alert_result" class="alert alert-success" style="display:none">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            The process was completed successfully!
         </div>
+    </body>
+    
+    <script src="https://pwcappkit-static.azureedge.net/cdn/release/3.6.0/vendor.min.js"></script>
+    <script src="https://pwcappkit-static.azureedge.net/cdn/release/3.0.0/appkit.min.js"></script>
+    <!-- <script src="/static/js/dropzone.js"></script> -->
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".a-stepper-fun").stepper();
+
+            $('#slider').slider({range: "min", min: 0, max: 1, value: 0.50, step: 0.01,
+                slide(event, ui) {
+                    $('#slider-val').val(formatNumber(ui.value));
+                },
+                change(event, ui) {
+                    $('#slider-val').val(formatNumber(ui.value));
+                }
+            });
+ 
+            $('.a-slider-input').not('.range').on('change', e => {
+                const target = $(e.target),
+                    num = target.val().replace(/,/g, ''),
+                    value = isNaN(num) ? 0 : num,
+                    slider = target.closest('.a-slider-header').siblings('.a-slider');
+                    slider.slider('value', value);
+            });
+ 
+            function formatNumber(num) {
+                while (/(\d+)(\d{3})/.test(num.toString())) {
+                    num = num.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+                }
+                return num;
+            }
+        });
+    </script>
+
+    <script>
+        initUpload('#upload-file-target', '#file-upload');
+
+        function initUpload(fileTargetID, dom) {
+            
+            const flow = new Flow({
+                target: '/upload',
+                singleFile: true
+            });
+
+            flow.assignBrowse($(fileTargetID));
+            flow.assignDrop($(fileTargetID));
+
+            flow.on('fileAdded', (file, event) => {
+                $(dom + '.upload-success').removeClass('hidden');
+
+                const fileFullName = file.name;
+                const flagIdx = fileFullName.lastIndexOf('.');
+                const fileType = fileFullName.substring(flagIdx + 1);
+                const fileName = file.name;
+                const uploadSuccess = $(
+                `<div class="upload-success" >
+                    <span class="icon-span-lg ft-wrapper"><span class="fileType"></span></span>
+                    <span class="fileSpan">
+                        <span class="fileName"></span>
+                        <span class="fileSize"></span>
+                    </span>
+                    <div class="progress hidden">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <span class="date hidden"></span>
+                    <span class="icon-wrapper">
+                    <button class="appkiticon icon-circle-delete-outline tooltip-link" title="" data-placement="top" data-toggle="tooltip" data-original-title="Delete" data-container="body"></button>
+                    </span>
+                </div>`
+                );
+                const uploadError = $(
+                `<div class="upload-error hidden">
+                    <span class="label label-danger">Error</span>
+                    <span class="message"></span>
+                    <span class="icon-wrapper">
+                        <button class="appkiticon icon-circle-delete-outline tooltip-link" title="" data-placement="top" data-toggle="tooltip" data-original-title="Delete" data-container="body"></button>
+                    </span>
+                </div>`
+                );
+
+                $(dom + ' .upload-success').replaceWith(uploadSuccess);
+                $(dom + ' .upload-error').replaceWith(uploadError);
+                $(dom + ' .icon-circle-delete-outline').on('click', () => {
+                    flow.cancel();
+                    $(dom + ' .upload-success').addClass('hidden');
+                    $(dom + ' .upload-error').addClass('hidden');
+                });
+
+                const iconClass = 'fileType appkiticon icon-file-fill';
+                $(dom + ' .upload-success .fileType').removeClass();
+                $(dom + ' .upload-success .ft-wrapper span:first-child').addClass(iconClass);
+                $(dom + ' .upload-success span.fileName').html(fileName);
+                $(dom + ' .upload-success span.fileName').attr('title', fileName);
+            });
+
+            flow.on('filesSubmitted', (file, event) => {
+                $(dom + ' .upload-success .progress').removeClass('hidden');
+
+                const flowObject = file[0];
+
+                var formData = new FormData();
+                formData.append('file', flowObject.file);
+                formData.append('percentage', $('#slider-val').val());
 
 
-          <div id="err_result" class="alert alert-warning" style="display:none">
-            <a href="#" class="close" data-dismiss="alert">&times;</a>
-            Please upload a file in .docx, .pptx, pdf or xlsx formats!
+                $.ajax({
+                    url: "/upload",
+                    type: "POST",
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        
+                        const fileSizeMB = (flowObject.size / 1024 / 1024).toFixed(1);
+                        const fileSizeKB = (flowObject.size / 1024).toFixed(1);
+                        let fileSize;
+                        if (fileSizeMB < '1') {
+                            fileSize = fileSizeKB + 'KB';
+                        } else {
+                            fileSize = fileSizeMB + 'MB';
+                        }
+                        $(dom + ' .upload-success span.fileSize').html(fileSize);
+                        setTimeout(() => {
+                            $(dom + '.icon-delete-outline').on('click', () => {
+                                flow.removeFile(file);
+                                $(dom + ' .upload-success').addClass('hidden');
+                                $(dom + ' .upload-error').addClass('hidden');
+                            });
+                        }, 600);
 
-          </div>
-         <textarea id="result_text" class="form-control" rows="8" style="display:none" ></textarea>
+                        if (response) {
+                            var text = response.output;
+                            $("#summarizedText").val(text);
+                            showNotification("success", "The file was successfully summarized.");
+                        }
+                    },
+                    error: function () {
+                        showNotification("error", "An error occurred, your request could not be processed.");
+                        const errorMessage = 'Failed to upload file “' + flowObject.name + '”';
+                        $(dom + ' .upload-success').addClass('hidden');
+                        $(dom + ' .upload-error').removeClass('hidden');
+                        $(dom + ' .upload-error span.message').html(errorMessage);
+                    }
+                });
+            });
 
-          <img id ="logo" src={{ url_for('static', filename='images/pemalogo.png') }}>  </img>
+            flow.on('fileProgress', file => {
+                const progressSize = file.progress() * 100 + '%';
+                $(dom + ' .upload-success .progress-bar').css('width', progressSize);
 
-      </div>
-</form>
+                if (file.isComplete()) {
+                    const date = moment().format('MMM DD,YYYY');
+                    setTimeout(() => {
+                        $(dom + ' .upload-success .progress').addClass('hidden');
+                        $(dom + ' .upload-success span.date').removeClass('hidden');
+                        $(dom + ' .upload-success span.date').html(date);
+                        $(dom + ' .upload-success .icon-circle-delete-outline').toggleClass('icon-circle-delete-outline icon-delete-outline');
+                    }, 1000);
+                }
+            });
 
-<form id="upload_image" action="/upload" class="dropzone" enctype="multipart/form-data" method="post"></form>
+            $(dom + '.icon-circle-delete-outline').on('click', () => {
+                flow.cancel();
+                $(dom + ' .upload-success').addClass('hidden');
+                $(dom + ' .upload-error').addClass('hidden');
+            });
+        }
+    </script>
 
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-<!-- {#<script src="{{ url_for('static', filename='js/droptest.js') }}"></script>#} -->
-{% endblock %}
+    <script>
+        function resetSummarizer() {
+            $('#slider').slider({range: "min", min: 0, max: 1, value: 0.50, step: 0.01});
+            $('#words-input').val(0);
+            $('#summarizedText').val('');
+            $('#file-upload .upload-success').addClass('hidden');
+            $('#file-upload .upload-error').addClass('hidden');
+            flow.cancel();
+        };
 
+        function copyToClipBoard() {
+            var copyText = document.getElementById("summarizedText");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            showNotification("warning", "Content was copied to the clipboard.");
+        };
 
-	<!-- jQuery -->
-	<script src="static/js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
-	<script src="static/js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
-	<script src="static/js/bootstrap.min.js"></script>
-	<!-- Carousel -->
-	<script src="static/js/owl.carousel.min.js"></script>
-	<!-- Stellar -->
-	<script src="static/js/jquery.stellar.min.js"></script>
-	<!-- Waypoints -->
-	<script src="static/js/jquery.waypoints.min.js"></script>
-	<!-- Counters -->
-	<script src="static/js/jquery.countTo.js"></script>
-	
-	
-	<!-- MAIN JS -->
-	<script src="static/js/main.js"></script>
+        function showNotification(type, text) {
+            if ($('.a-notification').hasClass('success')) {
+                $('.a-notification').removeClass('success');
+            }
+            if ($('.a-notification').hasClass('error')) {
+                $('.a-notification').removeClass('error');
+            }
+            if ($('.a-notification').hasClass('warning')) {
+                $('.a-notification').removeClass('warning');
+            }
 
-	</body>
+            $('.a-notification').addClass(type);
+            $('#notification-text').html(text);
+            $('.a-notification').notification('show');
+        }
+    </script>
+    
 </html>
-
